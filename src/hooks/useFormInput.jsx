@@ -11,13 +11,13 @@ const formReducer = (state, action) => {
       return { ...state, enteredValue: action.value };
 
     case 'INPUT_TOUCHED': {
-      return { ...state, inputTouched: action.isTouched };
+      return { ...state, inputTouched: true };
     }
 
     case 'INPUT_BLUR': {
       return {
-        inputTouched: action.isTouched,
-        enteredValue: action.value,
+        inputTouched: false,
+        enteredValue: '',
       };
     }
 
@@ -43,12 +43,12 @@ const useFormInput = validateInput => {
   };
 
   const inputBlurHandler = () => {
-    dispatchFormState({ type: 'INPUT_TOUCHED', isTouched: true });
+    dispatchFormState({ type: 'INPUT_TOUCHED' });
   };
 
   const resetValues = () => {
     // setEnteredValue('');
-    dispatchFormState({ type: 'INPUT_BLUR', isTouched: false, value: '' });
+    dispatchFormState({ type: 'INPUT_BLUR' });
   };
 
   return {
