@@ -1,6 +1,17 @@
 import React from 'react';
 import useFormInput from '../hooks/useFormInput';
 
+const nameFieldNotEmpty = value => value.trim() !== '';
+
+const emailFieldValid = value => {
+  const trimmedValue = value.trim();
+  return (
+    trimmedValue.includes('@') &&
+    trimmedValue.includes('.') &&
+    trimmedValue.length > 4
+  );
+};
+
 const BasicForm = () => {
   const {
     enteredValue: enteredFirstName,
@@ -9,7 +20,7 @@ const BasicForm = () => {
     inputBlurHandler: firstNameBlurHandler,
     valueIsValid: firstNameIsValid,
     resetValues: resetFirstName,
-  } = useFormInput(value => value.trim() !== '');
+  } = useFormInput(nameFieldNotEmpty);
 
   const {
     enteredValue: enteredLastName,
@@ -18,7 +29,7 @@ const BasicForm = () => {
     inputBlurHandler: lastNameBlurHandler,
     valueIsValid: lastNameIsValid,
     resetValues: resetLastName,
-  } = useFormInput(value => value.trim() !== '');
+  } = useFormInput(nameFieldNotEmpty);
 
   const {
     enteredValue: enteredEmail,
@@ -27,14 +38,7 @@ const BasicForm = () => {
     inputBlurHandler: emailBlurHandler,
     valueIsValid: emailIsValid,
     resetValues: resetEmail,
-  } = useFormInput(value => {
-    const trimmedValue = value.trim();
-    return (
-      trimmedValue.includes('@') &&
-      trimmedValue.includes('.') &&
-      trimmedValue.length > 4
-    );
-  });
+  } = useFormInput(emailFieldValid);
 
   let formIsValid = false;
 
@@ -54,7 +58,7 @@ const BasicForm = () => {
   };
 
   const inputClassHandler = invalidInput => {
-    return `form-control ${invalidInput ? 'invalid' : ''}`;
+    return `form-control${invalidInput ? ' invalid' : ''}`;
   };
 
   const firstNameClasses = inputClassHandler(firstNameHasError);
