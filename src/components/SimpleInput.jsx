@@ -6,12 +6,24 @@ const SimpleInput = props => {
   const [enteredEmail, setEnteredEmail] = useState('');
   const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
 
+  const inputInvalidHandler = (inputValid, inputTouched) => {
+    return !inputValid && inputTouched;
+  };
+
   const enteredNameIsValid = enteredName.trim() !== '';
-  const nameInputIsInvalid = !enteredNameIsValid && enteredNameTouched;
+
+  const nameInputIsInvalid = inputInvalidHandler(
+    enteredNameIsValid,
+    enteredNameTouched
+  );
 
   const enteredEmailIsValid =
     enteredEmail.trim().includes('@') && enteredEmail.trim().includes('.');
-  const emailInputIsInvalid = !enteredEmailIsValid && enteredEmailTouched;
+
+  const emailInputIsInvalid = inputInvalidHandler(
+    enteredEmailIsValid,
+    enteredEmailTouched
+  );
 
   let formIsValid = false;
 
@@ -30,7 +42,7 @@ const SimpleInput = props => {
 
   const emailInputChangeHandler = e => {
     setEnteredEmailTouched(true);
-    setEnteredEmail(e.target.value);
+    setEnteredEmail(e.target.value.trim());
   };
 
   const emailInputBlurHandler = () => {
