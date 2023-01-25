@@ -69,10 +69,10 @@ const BasicForm = () => {
     <form onSubmit={submitFormHandler}>
       <div className="control-group">
         <div className={firstNameClasses}>
-          <label htmlFor="name">First Name</label>
+          <label htmlFor="first-name">First Name</label>
           <input
             type="text"
-            id="name"
+            id="first-name"
             onChange={firstNameChangeHandler}
             onBlur={firstNameBlurHandler}
             value={enteredFirstName}
@@ -82,10 +82,10 @@ const BasicForm = () => {
           )}
         </div>
         <div className={lastNameClasses}>
-          <label htmlFor="name">Last Name</label>
+          <label htmlFor="last-name">Last Name</label>
           <input
             type="text"
-            id="name"
+            id="last-name"
             onChange={lastNameChangeHandler}
             onBlur={lastNameBlurHandler}
             value={enteredLastName}
@@ -96,10 +96,10 @@ const BasicForm = () => {
         </div>
       </div>
       <div className={emailClasses}>
-        <label htmlFor="name">E-Mail Address</label>
+        <label htmlFor="email">E-Mail Address</label>
         <input
-          type="text"
-          id="name"
+          type="email"
+          id="email"
           onChange={emailChangeHandler}
           onBlur={emailBlurHandler}
           value={enteredEmail}

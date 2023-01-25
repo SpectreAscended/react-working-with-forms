@@ -6,15 +6,24 @@ const defaultFormState = {
 };
 
 const formReducer = (state, action) => {
-  if (action.type === 'ENTERED_VALUE') {
-    return { ...state, enteredValue: action.value };
-  }
+  switch (action.type) {
+    case 'ENTERED_VALUE':
+      return { ...state, enteredValue: action.value };
 
-  if (action.type === 'INPUT_TOUCHED') {
-    return { ...state, inputTouched: action.boolean };
-  }
+    case 'INPUT_TOUCHED': {
+      return { ...state, inputTouched: action.isTouched };
+    }
 
-  return defaultFormState;
+    case 'INPUT_BLUR': {
+      return {
+        inputTouched: action.isTouched,
+        enteredValue: action.value,
+      };
+    }
+
+    default:
+      return defaultFormState;
+  }
 };
 
 const useFormInput = validateInput => {
@@ -34,12 +43,12 @@ const useFormInput = validateInput => {
   };
 
   const inputBlurHandler = () => {
-    dispatchFormState({ type: 'INPUT_TOUCHED', boolean: true });
+    dispatchFormState({ type: 'INPUT_TOUCHED', isTouched: true });
   };
 
   const resetValues = () => {
-    setEnteredValue('');
-    dispatchFormState({ type: 'INPUT_TOUCHED', boolean: false });
+    // setEnteredValue('');
+    dispatchFormState({ type: 'INPUT_BLUR', isTouched: false, value: '' });
   };
 
   return {
