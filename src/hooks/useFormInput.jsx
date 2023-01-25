@@ -1,30 +1,49 @@
-import React, { useState } from 'react';
+import { useReducer } from 'react';
+
+const defaultFormState = {
+  enteredValue: '',
+  inputTouched: false,
+};
+
+const formReducer = (state, action) => {
+  if (action.type === 'ENTERED_VALUE') {
+    return { ...state, enteredValue: action.value };
+  }
+
+  if (action.type === 'INPUT_TOUCHED') {
+    return { ...state, inputTouched: action.boolean };
+  }
+
+  return defaultFormState;
+};
 
 const useFormInput = validateInput => {
   // validateInput will be our validation function, passed in as an argument to our useFormInput call in the form.
 
-  const [enteredValue, setEnteredValue] = useState('');
-  const [inputTouched, setInputTouched] = useState(false);
+  const [formState, dispatchFormState] = useReducer(
+    formReducer,
+    defaultFormState
+  );
 
-  const valueIsValid = validateInput(enteredValue);
+  const valueIsValid = validateInput(formState.enteredValue);
 
-  const inputHasError = !valueIsValid && inputTouched;
+  const inputHasError = !valueIsValid && formState.inputTouched;
 
   const changeEnteredValueHandler = e => {
-    setEnteredValue(e.target.value);
+    dispatchFormState({ type: 'ENTERED_VALUE', value: e.target.value });
   };
 
   const inputBlurHandler = () => {
-    setInputTouched(true);
+    dispatchFormState({ type: 'INPUT_TOUCHED', boolean: true });
   };
 
   const resetValues = () => {
     setEnteredValue('');
-    setInputTouched(false);
+    dispatchFormState({ type: 'INPUT_TOUCHED', boolean: false });
   };
 
   return {
-    enteredValue,
+    enteredValue: formState.enteredValue,
     inputHasError,
     valueIsValid,
     changeEnteredValueHandler,
