@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import useInput from '../hooks/useInput';
 
-const SimpleInput = props => {
+const SimpleInput = () => {
   const {
     value: enteredName,
     isValid: enteredNameIsValid,
@@ -27,37 +27,11 @@ const SimpleInput = props => {
     );
   });
 
-  // const [enteredEmail, setEnteredEmail] = useState('');
-  // const [enteredEmailTouched, setEnteredEmailTouched] = useState(false);
-
-  // const inputInvalidHandler = (inputValid, inputTouched) => {
-  //   return !inputValid && inputTouched;
-  // };
-
-  // const enteredEmailIsValid =
-  //   enteredEmail.trim().includes('@') &&
-  //   enteredEmail.trim().includes('.') &&
-  //   enteredEmail.trim().length > 4;
-
-  // const emailInputIsInvalid = inputInvalidHandler(
-  //   enteredEmailIsValid,
-  //   enteredEmailTouched
-  // );
-
   let formIsValid = false;
 
   if (enteredNameIsValid && enteredEmailIsValid) {
     formIsValid = true;
   }
-
-  // const emailInputChangeHandler = e => {
-  //   setEnteredEmailTouched(true);
-  //   setEnteredEmail(e.target.value.trim());
-  // };
-
-  // const emailInputBlurHandler = () => {
-  //   setEnteredEmailTouched(true);
-  // };
 
   const formSubmissionHandler = e => {
     e.preventDefault();
